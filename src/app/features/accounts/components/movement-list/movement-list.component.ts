@@ -21,15 +21,24 @@ export class MovementListComponent {
 
   // Internal filter state
   filter = signal<'ALL' | 'CREDIT' | 'DEBIT'>('ALL');
+  searchText = signal<string>('');
 
   // Computed: lista filtrata in base al filter signal
   filteredMovements = computed(() => {
     const currentFilter = this.filter();
     const allMovements = this.movements();
-    if (currentFilter === 'ALL') {
-      return allMovements;
+    const search = this.searchText().toLowerCase().trim();
+
+    let result = currentFilter === 'ALL'
+      ? allMovements
+      : allMovements.filter(m => m.type === currentFilter);
+
+    if (search) {
+      result = result.filter(m =>
+        m.description.toLowerCase().includes(search)
+      );
     }
-    return allMovements.filter(m => m.type === currentFilter);
+    return result;
   });
 
   setFilter(value: 'ALL' | 'CREDIT' | 'DEBIT'): void {

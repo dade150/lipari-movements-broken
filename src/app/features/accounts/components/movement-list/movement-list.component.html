@@ -1,5 +1,14 @@
 <div class="movement-list-container">
 
+  <!-- Search bar -->
+<div class="search-bar">
+  <input
+    type="text"
+    placeholder="Cerca per descrizione..."
+    (input)="searchText.set($any($event.target).value)"
+  />
+</div>
+
   <!-- Loading state -->
   @if (isLoading()) {
     <div class="state-message state-message--loading">
@@ -78,7 +87,11 @@
         </li>
       } @empty {
         <li class="empty-state">
-          Nessun movimento trovato per il filtro selezionato.
+          @if (searchText()) {
+            Nessun risultato per la ricerca "{{ searchText() }}".
+          } @else {
+            Nessun movimento trovato per il filtro selezionato.
+          }
         </li>
       }
     </ul>
