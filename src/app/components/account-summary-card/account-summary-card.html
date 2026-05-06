@@ -1,0 +1,6 @@
+<app-balance-display
+      [balance]="account.balance"
+      [accountName]="account.name"
+      [lastUpdate]="account.lastUpdate"
+      (refreshRequested)="onRefresh()"
+/>

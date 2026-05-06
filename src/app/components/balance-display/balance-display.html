@@ -1,0 +1,17 @@
+<div class="card">
+  <h2>{{ accountName() }}</h2>
+
+  <p class="balance">
+    {{ balance() | bankCurrency }}
+  </p>
+
+  @if (balance() < 0) {
+    <span class="negative-indicator">⚠️ Saldo negativo</span>
+  }
+
+  <p class="last-update">
+    Ultimo aggiornamento: {{ lastUpdate() | date: 'dd/MM/yyyy HH:mm' }}
+  </p>
+
+  <button (click)="refreshRequested.emit()">Aggiorna</button>
+</div>
